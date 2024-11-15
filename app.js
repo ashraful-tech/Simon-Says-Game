@@ -1,12 +1,14 @@
 let gameSeq = [];
 let userSeq = [];
 
-let btns = ["yellow", "red", "purple", "green"];
+let btns = ["red", "yellow", "green", "purple"];//["yellow", "red", "purple", "green"]
 
 let started = false;
 let level = 0;
+let highScore = level;
 
 let h2 = document.querySelector("h3");
+let h4 = document.querySelector("#highScore");
 
 document.addEventListener("keypress", function () {
   if (started == false) {
@@ -32,13 +34,16 @@ function userFlash(btn) {
 }
 
 function levelUp() {
-  userSeq = [];
+  userSeq = []; //user seq empty
   level++;
   h2.innerText = `Level ${level}`;
 
-  let randIdx = Math.floor(Math.random() * 3);
-  let randColor = btns[randIdx];
-  let randBtn = document.querySelector(`.${randColor}`);
+ 
+  let randIdx = Math.floor(Math.random() * 3); //random 0-3
+  //console.log(randIdx);
+  let randColor = btns[randIdx];  
+  //console.log(randColor);
+  let randBtn = document.querySelector(`.${randColor}`); 
   gameSeq.push(randColor);
   console.log(gameSeq);
   gameFlash(randBtn);
@@ -51,6 +56,12 @@ function checkAns(idx) {
     }
   } else {
     h2.innerHTML = `Game Over! Your score was <b>${level}</b> <br> Press any key to start.`;
+    if (level < highScore){
+      h4.innerHTML = `High Score: <b>${highScore}</b>`;
+    }else {
+      h4.innerHTML = `High Score: <b>${level}</b>`;
+    }
+  
     document.querySelector("body").style.backgroundColor = "red";
     setTimeout(function () {
       document.querySelector("body").style.backgroundColor = "white";
